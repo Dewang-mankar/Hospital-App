@@ -4,42 +4,75 @@
  *
  * @format
  */
+import React from 'react';
+import { View, Text } from 'react-native';
+import { createStaticNavigation,useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import {Link} from '@react-navigation/native'
+import { Button } from '@react-navigation/elements';
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-  return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
-}
+import Hospital from './pages/Hospital'
+import Hospital1 from './pages/Hospital1'
+import Home from './pages/Home'
+import Aboutus from './pages/Aboutus'
 
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
+const RootStack = createNativeStackNavigator({
+  initialRouteName: 'Home',
 
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
-}
+  screenOptions: {
+    headerStyle: {
+      backgroundColor: 'tomato',
+    },
+    headerTintColor: 'white',
+  },
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  screens: {
+    Home: {
+      screen: Home,
+      options: {
+        title: 'Home Page',
+      },
+    },
+
+    Aboutus: {
+      screen: Aboutus,
+      options: {
+        title: 'About Us',
+      },
+    },
+
+    Doctor: {
+      screen: Hospital,
+      options: {
+        title: 'Doctor',
+      },
+    },
+
+    OPD: {
+      screen: Hospital1,
+      options: {
+        title: 'OPD',
+      },
+    },
   },
 });
 
-export default App;
+
+const Navigation = createStaticNavigation(RootStack);
+
+export default function App() {
+  return(
+    
+     <Navigation/>
+    
+  )
+}
+
+
+
+
+
